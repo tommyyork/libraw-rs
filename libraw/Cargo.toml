@@ -1,10 +1,10 @@
 [package]
 name = "libraw-rs"
-version = "0.0.4" # remember to update html_root_url
-authors = ["Paolo Barbolini <paolo@paolo565.org>"]
+version = "0.0.5" # remember to update html_root_url
+authors = ["Paolo Barbolini <paolo@paolo565.org>", "Tommy York <tommy.york@gmail.com"]
 description = "LibRaw bindings"
 license = "MIT/Apache-2.0"
-repository = "https://github.com/paolobarbolini/libraw-rs"
+repository = "https://github.com/tommyyork/libraw-rs"
 categories = ["multimedia::images", "api-bindings"]
 keywords = ["raw"]
 readme = "README.md"
@@ -15,7 +15,8 @@ include = ["src/**/*", "LICENSE-*", "README.md"]
 name = "libraw"
 
 [dependencies]
-libraw-rs-sys = { version = "0.0.4", path = "../libraw-sys" }
+libraw-rs-sys = { version = "0.0.5", path = "../libraw-sys" }
 
 [features]
+uselocal = ["libraw-rs-sys/uselocal"]
 bindgen = ["libraw-rs-sys/bindgen"]

@@ -5,16 +5,26 @@ fn main() {
     let out_dir_ = env::var_os("OUT_DIR").unwrap();
     let out_dir = Path::new(&out_dir_);
 
+    #[cfg(feature = "uselocal")]
+    use_local();
+    #[cfg(not(feature = "uselocal"))]
     build(out_dir);
     #[cfg(feature = "bindgen")]
     bindings(out_dir);
+}
+
+fn use_local() {
+    println!("cargo:rust-link-search=/usr/local/lib/");
+    println!("cargo:rustc-link-lib=dng");
+    println!("cargo:rust-link-search=/usr/local/lib/");
+    println!("cargo:rustc-link-lib=raw");
 }
 
 fn build(out_dir: &Path) {
     let mut libraw = cc::Build::new();
     libraw.cpp(true);
     libraw.include("libraw/");
-
+    libraw.file("libraw/src/decompressors/losslessjpeg.cpp");
     libraw.file("libraw/src/decoders/canon_600.cpp");
     libraw.file("libraw/src/decoders/crx.cpp");
     libraw.file("libraw/src/decoders/decoders_dcraw.cpp");
@@ -26,7 +36,9 @@ fn build(out_dir: &Path) {
     libraw.file("libraw/src/decoders/generic.cpp");
     libraw.file("libraw/src/decoders/kodak_decoders.cpp");
     libraw.file("libraw/src/decoders/load_mfbacks.cpp");
+    libraw.file("libraw/src/decoders/pana8.cpp");
     libraw.file("libraw/src/decoders/smal.cpp");
+    libraw.file("libraw/src/decoders/sonycc.cpp");
     libraw.file("libraw/src/decoders/unpack.cpp");
     libraw.file("libraw/src/decoders/unpack_thumb.cpp");
     libraw.file("libraw/src/demosaic/aahd_demosaic.cpp");
@@ -78,6 +90,7 @@ fn build(out_dir: &Path) {
     libraw.file("libraw/src/tables/wblists.cpp");
     libraw.file("libraw/src/utils/curves.cpp");
     libraw.file("libraw/src/utils/decoder_info.cpp");
+    libraw.file("libraw/src/utils/decoder_info.cpp");
     libraw.file("libraw/src/utils/init_close_utils.cpp");
     libraw.file("libraw/src/utils/open.cpp");
     libraw.file("libraw/src/utils/phaseone_processing.cpp");
@@ -95,7 +108,7 @@ fn build(out_dir: &Path) {
     // libraw.file("libraw/src/libraw_cxx.cpp");
     libraw.file("libraw/src/libraw_datastream.cpp");
 
-    libraw.warnings(false);
+    libraw.warnings(true);
     libraw.extra_warnings(false);
     // do I really have to supress all of these?
     libraw.flag_if_supported("-Wno-format-truncation");

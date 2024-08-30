@@ -9,7 +9,14 @@ pub struct Processor {
 
 impl Processor {
     pub fn new() -> Self {
-        let inner = unsafe { sys::libraw_init(0) };
+        // pub const LibRaw_processing_options_LIBRAW_RAWOPTIONS_DNG_PREFER_LARGEST_IMAGE: LibRaw_processing_options = 2048;
+        // pub const LibRaw_processing_options_LIBRAW_RAWOPTIONS_DNG_STAGE2: LibRaw_processing_options = 4096;
+        // pub const LibRaw_processing_options_LIBRAW_RAWOPTIONS_DNG_STAGE3: LibRaw_processing_options = 8192;
+        // pub const LibRaw_processing_options_LIBRAW_RAWOPTIONS_DNG_ALLOWSIZECHANGE: LibRaw_processing_options = 16384;
+        // pub const LibRaw_processing_options_LIBRAW_RAWOPTIONS_DNG_STAGE2_IFPRESENT: LibRaw_processing_options = 1048576;
+        // pub const LibRaw_processing_options_LIBRAW_RAWOPTIONS_DNG_STAGE3_IFPRESENT: LibRaw_processing_options = 2097152;
+
+        let inner = unsafe { sys::libraw_init(2048 | 16384 | 1048576 | 2097152) };
         Self { inner }
     }
 

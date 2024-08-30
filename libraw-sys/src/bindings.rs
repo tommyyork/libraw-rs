@@ -627,6 +627,7 @@ pub const LIBRAW_SHLIB_REVISION: u32 = 0;
 pub const LIBRAW_SHLIB_AGE: u32 = 0;
 pub const LibRawBigEndian: u32 = 0;
 pub const LIBRAW_HISTOGRAM_SIZE: u32 = 8192;
+
 extern "C" {
     pub fn memcpy(
         __dest: *mut libc::c_void,

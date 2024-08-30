@@ -4,3 +4,7 @@ members = [
   "libraw",
   "libraw-sys"
 ]
+default-members = [
+  "libraw",
+  "libraw-sys"
+]
